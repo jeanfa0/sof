@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Snoopy — El Beagle Más Cool del Universo</title>
+  <link rel="stylesheet" href="css/snoopy.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Caveat:wght@400;700&family=Special+Elite&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- Cursor personalizado -->
+  <div class="cursor"></div>
+  <div class="cursor-trail"></div>
+
+  <!-- Nav -->
+  <nav class="nav">
+    <a href="index.html" class="nav-back">← Volver</a>
+    <span class="nav-title">Peanuts Universe</span>
+    <div class="nav-dots">
+      <a href="snoopy.html" class="dot active"></a>
+      <a href="pochacco.html" class="dot"></a>
+      <a href="kuromi.html" class="dot"></a>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="hero">
+    <div class="comic-panel panel-1">
+      <div class="speech-bubble left">
+        "Happiness is a warm puppy."
+      </div>
+    </div>
+
+    <div class="hero-center">
+      <div class="snoopy-art">
+        <img src="https://upload.wikimedia.org/wikipedia/en/5/53/Snoopy_Peanuts_characters.png"
+             alt="Snoopy"
+             class="snoopy-img floating"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='block'" />
+        <div class="snoopy-fallback" style="display:none">🐶</div>
+      </div>
+      <h1 class="hero-title">
+        <span class="line1">SNOOPY</span>
+        <span class="line2">el beagle</span>
+        <span class="line3">más icónico</span>
+      </h1>
+    </div>
+
+    <div class="comic-panel panel-2">
+      <div class="speech-bubble right">
+        "¡Good grief, Charlie Brown!"
+      </div>
+    </div>
+
+    <div class="scroll-hint">↓ Sigue leyendo ↓</div>
+    <div class="halftone-bg"></div>
+  </header>
+
+  <!-- Stats Section -->
+  <section class="stats">
+    <div class="stats-inner">
+      <div class="stat-card">
+        <span class="stat-num">75</span>
+        <span class="stat-label">Años de historia</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-num">17,897</span>
+        <span class="stat-label">Tiras cómicas publicadas</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-num">75+</span>
+        <span class="stat-label">Países donde aparece</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-num">∞</span>
+        <span class="stat-label">Amor de los fans</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quien es Section -->
+  <section class="about">
+    <div class="about-grid">
+      <div class="about-text">
+        <h2 class="section-title">¿Quién es Snoopy?</h2>
+        <p>Snoopy es el <strong>Beagle más famoso del mundo</strong>, mascota de Charlie Brown y protagonista de la tira cómica <em>Peanuts</em>, creada por Charles M. Schulz en 1950. Aunque técnicamente es un perro, Snoopy tiene una vida interior tremendamente rica: sueña con ser el Barón Rojo, escribe novelas en su casita, baila, cocina y filosofa sobre la vida.</p>
+        <p>Su mejor amigo es <strong>Woodstock</strong>, un pajarito amarillo que habla en líneas y marcas, y que de alguna forma Snoopy entiende perfectamente. Juntos forman uno de los dúos más queridos de la cultura popular.</p>
+        <div class="fact-tags">
+          <span class="tag">🎷 Toca el piano</span>
+          <span class="tag">✈️ Piloto del WWI</span>
+          <span class="tag">📖 Escritor frustrado</span>
+          <span class="tag">🍕 Foodie</span>
+          <span class="tag">💃 Bailarín nato</span>
+        </div>
+      </div>
+      <div class="about-visual">
+        <div class="doghouse">
+          <div class="doghouse-roof">🏠</div>
+          <div class="doghouse-text">SNOOPY</div>
+          <div class="woodstock">🐦</div>
+        </div>
+        <div class="typewriter-card">
+          <div class="typewriter-top">⬜⬜⬜ ▬▬▬</div>
+          <div class="typewriter-text" id="typewriter"></div>
+          <div class="typewriter-cursor">|</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Alter Egos -->
+  <section class="alter-egos">
+    <h2 class="section-title centered">Sus Alter Egos Épicos</h2>
+    <div class="egos-grid">
+      <div class="ego-card" data-color="#c0392b">
+        <div class="ego-emoji">✈️</div>
+        <h3>El Barón Rojo</h3>
+        <p>Piloto de la Primera Guerra Mundial que persigue al Fokker Dr.I desde el techo de su casita. Su mayor enemigo: el maldito Barón Rojo de Richthofen.</p>
+      </div>
+      <div class="ego-card" data-color="#2c3e50">
+        <div class="ego-emoji">🕵️</div>
+        <h3>Joe Cool</h3>
+        <p>Con gafas de sol y actitud de campus universitario, Joe Cool es demasiado cool para hacer cualquier cosa. La vibra universitaria máxima.</p>
+      </div>
+      <div class="ego-card" data-color="#8e44ad">
+        <div class="ego-emoji">🎸</div>
+        <h3>El Estudiante</h3>
+        <p>Snoopy va a la universidad como cualquier estudiante normal. Excepto que vive en el techo de su casita y su mejor amigo es un pájaro.</p>
+      </div>
+      <div class="ego-card" data-color="#e67e22">
+        <div class="ego-emoji">🌙</div>
+        <h3>El Beagle Cósmico</h3>
+        <p>Astronauta, explorador espacial. El módulo lunar del Apollo 10 fue nombrado "Snoopy" en su honor. ¡Snoopy llegó a la Luna!</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Video Section -->
+  <section class="video-section">
+    <h2 class="section-title centered">Snoopy en Acción</h2>
+    <div class="video-grid">
+      <div class="video-wrapper featured">
+        <iframe
+          src="https://www.youtube.com/embed/r30D3SW4OVw"
+          title="A Charlie Brown Christmas"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+        <div class="video-label">🎄 A Charlie Brown Christmas (1965)</div>
+      </div>
+      <div class="video-wrapper">
+        <iframe
+          src="https://www.youtube.com/embed/YnBMoY5OaVs"
+          title="Snoopy Dance"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+        <div class="video-label">💃 El Baile de Snoopy</div>
+      </div>
+      <div class="video-wrapper">
+        <iframe
+          src="https://www.youtube.com/embed/pkFNkRdpXzQ"
+          title="Snoopy Movie Trailer"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+        <div class="video-label">🎬 The Peanuts Movie</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Filosofía / Quotes -->
+  <section class="quotes">
+    <h2 class="section-title centered">La Filosofía Snoopy</h2>
+    <div class="quotes-carousel" id="quotesCarousel">
+      <div class="quote-slide active">
+        <blockquote>"La felicidad es un cachorro calentito."</blockquote>
+        <cite>— Charles M. Schulz / Snoopy</cite>
+      </div>
+      <div class="quote-slide">
+        <blockquote>"Mañana es otro día. Y otro día trae otra oportunidad para comer más."</blockquote>
+        <cite>— Snoopy, probablemente</cite>
+      </div>
+      <div class="quote-slide">
+        <blockquote>"No hay problema tan grande que no pueda huirse de él."</blockquote>
+        <cite>— Snoopy, estratega vital</cite>
+      </div>
+      <div class="quote-slide">
+        <blockquote>"¿Por qué no puedo tener una vida normal? Oh, wait. Soy un perro."</blockquote>
+        <cite>— Snoopy en modo existencial</cite>
+      </div>
+    </div>
+    <div class="quote-controls">
+      <button class="q-btn" onclick="prevQuote()">←</button>
+      <button class="q-btn" onclick="nextQuote()">→</button>
+    </div>
+  </section>
+
+  <!-- Timeline -->
+  <section class="timeline">
+    <h2 class="section-title centered">La Historia</h2>
+    <div class="timeline-track">
+      <div class="tl-item left">
+        <div class="tl-year">1950</div>
+        <div class="tl-content">
+          <h4>El debut</h4>
+          <p>Peanuts aparece por primera vez el 2 de octubre en 7 periódicos de EE.UU.</p>
+        </div>
+      </div>
+      <div class="tl-item right">
+        <div class="tl-year">1952</div>
+        <div class="tl-content">
+          <h4>La casita icónica</h4>
+          <p>Snoopy empieza a dormir encima de su casita roja, una imagen que definiría al personaje.</p>
+        </div>
+      </div>
+      <div class="tl-item left">
+        <div class="tl-year">1965</div>
+        <div class="tl-content">
+          <h4>A Charlie Brown Christmas</h4>
+          <p>El especial de TV gana un Emmy y un Peabody Award. Snoopy se roba el show.</p>
+        </div>
+      </div>
+      <div class="tl-item right">
+        <div class="tl-year">1969</div>
+        <div class="tl-content">
+          <h4>Va a la Luna</h4>
+          <p>El módulo lunar del Apollo 10 es bautizado "Snoopy". La NASA lo adopta como mascota de seguridad.</p>
+        </div>
+      </div>
+      <div class="tl-item left">
+        <div class="tl-year">2000</div>
+        <div class="tl-content">
+          <h4>Schulz descansa</h4>
+          <p>Charles M. Schulz publica su última tira el 13 de febrero, un día antes de morir. El mundo llora.</p>
+        </div>
+      </div>
+      <div class="tl-item right">
+        <div class="tl-year">2015</div>
+        <div class="tl-content">
+          <h4>The Peanuts Movie</h4>
+          <p>La película en animación 3D recauda más de $246M mundialmente y enamora a nuevas generaciones.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery -->
+  <section class="gallery">
+    <h2 class="section-title centered">Galería Icónica</h2>
+    <div class="gallery-grid">
+      <div class="gallery-item" style="background: #c0392b;">
+        <div class="gallery-emoji">✈️</div>
+        <p>Barón Rojo</p>
+      </div>
+      <div class="gallery-item" style="background: #2c3e50;">
+        <div class="gallery-emoji">🎷</div>
+        <p>Jazz Night</p>
+      </div>
+      <div class="gallery-item" style="background: #27ae60;">
+        <div class="gallery-emoji">🎄</div>
+        <p>Navidad</p>
+      </div>
+      <div class="gallery-item" style="background: #e67e22;">
+        <div class="gallery-emoji">🌙</div>
+        <p>Luna Mission</p>
+      </div>
+      <div class="gallery-item" style="background: #8e44ad;">
+        <div class="gallery-emoji">🕵️</div>
+        <p>Joe Cool</p>
+      </div>
+      <div class="gallery-item" style="background: #c0392b;">
+        <div class="gallery-emoji">💃</div>
+        <p>Happy Dance</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-art">
+      <span class="footer-snoopy">🐶</span>
+      <span class="footer-bird">🐦</span>
+    </div>
+    <p class="footer-text">"Good grief!" — Snoopy, siempre</p>
+    <p class="footer-credit">Hecho con ❤️ para todos los fans de Peanuts</p>
+    <div class="footer-nav">
+      <a href="pochacco.html">Ver Pochacco →</a>
+      <a href="kuromi.html">Ver Kuromi →</a>
+    </div>
+  </footer>
+
+  <script>
+    // Typewriter effect
+    const phrases = [
+      "It was a dark and stormy night...",
+      "Dear Pencil Pal...",
+      "The barón rojo approaches...",
+      "To eat or not to eat..."
+    ];
+    let phraseIdx = 0, charIdx = 0, deleting = false;
+    const tw = document.getElementById('typewriter');
+
+    function typeLoop() {
+      const current = phrases[phraseIdx];
+      if (!deleting) {
+        tw.textContent = current.slice(0, charIdx++);
+        if (charIdx > current.length) { deleting = true; setTimeout(typeLoop, 1500); return; }
+      } else {
+        tw.textContent = current.slice(0, charIdx--);
+        if (charIdx < 0) { deleting = false; phraseIdx = (phraseIdx + 1) % phrases.length; charIdx = 0; }
+      }
+      setTimeout(typeLoop, deleting ? 40 : 80);
+    }
+    typeLoop();
+
+    // Quotes carousel
+    let currentQuote = 0;
+    const slides = document.querySelectorAll('.quote-slide');
+    function showQuote(idx) {
+      slides.forEach(s => s.classList.remove('active'));
+      slides[idx].classList.add('active');
+    }
+    function nextQuote() {
+      currentQuote = (currentQuote + 1) % slides.length;
+      showQuote(currentQuote);
+    }
+    function prevQuote() {
+      currentQuote = (currentQuote - 1 + slides.length) % slides.length;
+      showQuote(currentQuote);
+    }
+    setInterval(nextQuote, 4000);
+
+    // Ego cards interaction
+    document.querySelectorAll('.ego-card').forEach(card => {
+      card.addEventListener('mouseenter', () => {
+        card.style.setProperty('--ego-color', card.dataset.color);
+      });
+    });
+
+    // Scroll animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) e.target.classList.add('visible');
+      });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.tl-item, .stat-card, .ego-card, .gallery-item').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>

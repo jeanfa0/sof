@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pochacco — El Cachorrito Más Sporty de Sanrio</title>
+  <link rel="stylesheet" href="css/pochacco.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&family=Poppins:wght@300;600;800&family=Fredoka+One&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- Floating particles -->
+  <div class="particles" id="particles"></div>
+
+  <!-- Nav -->
+  <nav class="nav">
+    <a href="index.html" class="nav-back">← Volver</a>
+    <div class="nav-logo">🐾 Pochacco World</div>
+    <div class="nav-dots">
+      <a href="snoopy.html" class="dot"></a>
+      <a href="pochacco.html" class="dot active"></a>
+      <a href="kuromi.html" class="dot"></a>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header class="hero">
+    <div class="hero-blob blob-1"></div>
+    <div class="hero-blob blob-2"></div>
+    <div class="hero-blob blob-3"></div>
+
+    <div class="hero-content">
+      <div class="badge">✨ Sanrio Original ✨</div>
+      <h1 class="hero-title">
+        <span class="title-main">Pochacco</span>
+        <span class="title-sub">El amigo más dulce del mundo</span>
+      </h1>
+      <div class="hero-dog">
+        <div class="dog-wrapper">
+          <img
+            src="https://www.sanrio.com/cdn/shop/files/pochacco-sq.jpg"
+            alt="Pochacco"
+            class="dog-img"
+            onerror="this.style.display='none'; this.nextElementSibling.style.display='block'" />
+          <div class="dog-fallback" style="display:none">🐶</div>
+          <div class="dog-shadow"></div>
+        </div>
+      </div>
+      <div class="hero-tags">
+        <span>🏃 Deportista</span>
+        <span>🌸 Amistoso</span>
+        <span>💙 Adorable</span>
+        <span>⭐ Fan Favorite</span>
+      </div>
+    </div>
+
+    <div class="scroll-indicator">
+      <div class="scroll-ball"></div>
+    </div>
+  </header>
+
+  <!-- Card de datos -->
+  <section class="id-card-section">
+    <div class="id-card">
+      <div class="id-header">
+        <span class="id-emoji">🐾</span>
+        <h2>Ficha Oficial</h2>
+      </div>
+      <div class="id-grid">
+        <div class="id-row">
+          <span class="id-key">Nombre</span>
+          <span class="id-val">Pochacco</span>
+        </div>
+        <div class="id-row">
+          <span class="id-key">Debut</span>
+          <span class="id-val">1 de agosto, 1993</span>
+        </div>
+        <div class="id-row">
+          <span class="id-key">Especie</span>
+          <span class="id-val">Perrito (puppy)</span>
+        </div>
+        <div class="id-row">
+          <span class="id-key">Color favorito</span>
+          <span class="id-val">Azul cielo 💙</span>
+        </div>
+        <div class="id-row">
+          <span class="id-key">Deporte favorito</span>
+          <span class="id-val">Fútbol ⚽</span>
+        </div>
+        <div class="id-row">
+          <span class="id-key">Mejor amigo</span>
+          <span class="id-val">Mocha ☕</span>
+        </div>
+        <div class="id-row">
+          <span class="id-key">Personalidad</span>
+          <span class="id-val">Alegre, energético, cariñoso</span>
+        </div>
+        <div class="id-row">
+          <span class="id-key">Empresa</span>
+          <span class="id-val">Sanrio 🎀</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="id-story">
+      <h2 class="section-title">¿Quién es Pochacco?</h2>
+      <p>Pochacco es un <strong>perrito blanco con orejas caídas</strong> y una pequeña mancha verde en la cabeza. Nacido el 1 de agosto de 1993, es uno de los personajes más queridos de Sanrio y comparte universo con Hello Kitty, My Melody y Cinnamoroll.</p>
+      <p>Su carácter es <strong>enérgico y deportivo</strong>: le encanta el fútbol, correr y cualquier actividad al aire libre. Pero también es increíblemente tierno y cariñoso con sus amigos. Su mejor amigo es <strong>Mocha</strong>, un perrito marrón igual de simpático.</p>
+      <p>Lo que hace único a Pochacco es esa combinación perfecta de <em>energía kawaii</em>: activo, juguetón, pero nunca agresivo. Puro amor en forma de cachorro.</p>
+    </div>
+  </section>
+
+  <!-- Personalidad Grid -->
+  <section class="personality">
+    <h2 class="section-title centered">La Personalidad de Pochacco</h2>
+    <div class="personality-grid">
+      <div class="p-card blue">
+        <div class="p-icon">⚽</div>
+        <h3>Super Deportista</h3>
+        <p>El fútbol es su pasión número uno. Siempre está listo para una patada al balón o una carrera en el parque.</p>
+        <div class="p-meter">
+          <div class="p-bar" style="--pct: 95%"></div>
+        </div>
+        <span class="p-label">Energía: 95%</span>
+      </div>
+      <div class="p-card mint">
+        <div class="p-icon">🌸</div>
+        <h3>Mega Amigable</h3>
+        <p>Hace amigos en segundos. Su actitud abierta y alegre hace que todos quieran estar a su lado.</p>
+        <div class="p-meter">
+          <div class="p-bar" style="--pct: 100%"></div>
+        </div>
+        <span class="p-label">Sociabilidad: 100%</span>
+      </div>
+      <div class="p-card lavender">
+        <div class="p-icon">😴</div>
+        <h3>Pequeño Dormilón</h3>
+        <p>Cuando no está jugando, está dormido. La siesta post-ejercicio es sagrada para Pochacco.</p>
+        <div class="p-meter">
+          <div class="p-bar" style="--pct: 88%"></div>
+        </div>
+        <span class="p-label">Siestas: 88%</span>
+      </div>
+      <div class="p-card peach">
+        <div class="p-icon">🍓</div>
+        <h3>Amante de la Comida</h3>
+        <p>Las fresas son su fruta favorita. También adora los snacks después del entrenamiento.</p>
+        <div class="p-meter">
+          <div class="p-bar" style="--pct: 90%"></div>
+        </div>
+        <span class="p-label">Foodie: 90%</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Videos -->
+  <section class="video-section">
+    <h2 class="section-title centered">Pochacco en Movimiento 🎬</h2>
+    <div class="video-layout">
+      <div class="video-main">
+        <div class="video-card">
+          <iframe
+            src="https://www.youtube.com/embed/3tmd-ClpJxA"
+            title="Pochacco Animation"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+          </iframe>
+          <div class="video-info">
+            <span class="v-badge">⭐ Popular</span>
+            <span class="v-title">Pochacco — Compilation</span>
+          </div>
+        </div>
+      </div>
+      <div class="video-side">
+        <div class="video-card small">
+          <iframe
+            src="https://www.youtube.com/embed/y-8Lkp4KBXU"
+            title="Sanrio Pochacco"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+          </iframe>
+          <div class="video-info">
+            <span class="v-badge new">💙 Sanrio</span>
+            <span class="v-title">Pochacco Fan Animation</span>
+          </div>
+        </div>
+        <div class="video-card small">
+          <iframe
+            src="https://www.youtube.com/embed/TaHHkJaLT_s"
+            title="Pochacco Kawaii"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+          </iframe>
+          <div class="video-info">
+            <span class="v-badge">🎀 Kawaii</span>
+            <span class="v-title">Pochacco Cute Moments</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Fun Facts -->
+  <section class="fun-facts">
+    <h2 class="section-title centered">Datos que quizás no sabías 🌟</h2>
+    <div class="facts-list">
+      <div class="fact-item" data-num="01">
+        <div class="fact-bubble">
+          <span class="fact-emoji">📅</span>
+          <h4>Cumple el 1 de agosto</h4>
+          <p>Su cumpleaños es el mismo día que el de Fiesta del Amigo de Sanrio. ¡Hecho para celebrar!</p>
+        </div>
+      </div>
+      <div class="fact-item" data-num="02">
+        <div class="fact-bubble">
+          <span class="fact-emoji">🔵</span>
+          <h4>La mancha verde</h4>
+          <p>Esa mancha oscura en su cabeza no es suciedad — es parte de su diseño característico, como si siempre llevara una boina.</p>
+        </div>
+      </div>
+      <div class="fact-item" data-num="03">
+        <div class="fact-bubble">
+          <span class="fact-emoji">🏆</span>
+          <h4>Ganó un concurso</h4>
+          <p>Pochacco fue diseñado como ganador de un concurso interno de Sanrio. ¡La gente votó por él desde el principio!</p>
+        </div>
+      </div>
+      <div class="fact-item" data-num="04">
+        <div class="fact-bubble">
+          <span class="fact-emoji">🌍</span>
+          <h4>Ídolo en Asia</h4>
+          <p>Pochacco es especialmente popular en Japón, Taiwán y Corea del Sur, donde su estética sporty conecta con la cultura joven.</p>
+        </div>
+      </div>
+      <div class="fact-item" data-num="05">
+        <div class="fact-bubble">
+          <span class="fact-emoji">💙</span>
+          <h4>El azul lo define</h4>
+          <p>Su color signature es el azul cielo. Toda su merch, de mochilas a peluches, lleva ese tono distintivo.</p>
+        </div>
+      </div>
+      <div class="fact-item" data-num="06">
+        <div class="fact-bubble">
+          <span class="fact-emoji">🤝</span>
+          <h4>Amigo de Cinnamoroll</h4>
+          <p>Dentro del universo Sanrio, tiene una amistad especial con Cinnamoroll — ambos son los cachorritos más adorables del plantel.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Merch showcase -->
+  <section class="merch">
+    <h2 class="section-title centered">El Universo Merch 🛍️</h2>
+    <p class="merch-intro">Pochacco está en absolutamente todo — y lo hace adorable siempre:</p>
+    <div class="merch-grid">
+      <div class="merch-card" style="--mc: #b3e0ff">
+        <div class="merch-icon">🎒</div>
+        <h4>Mochilas</h4>
+        <p>Iconográficas, en azul cielo con su carita bordada</p>
+      </div>
+      <div class="merch-card" style="--mc: #d4f5e9">
+        <div class="merch-icon">🧸</div>
+        <h4>Peluches</h4>
+        <p>Los más suaves del universo kawaii. Coleccionables y adorables</p>
+      </div>
+      <div class="merch-card" style="--mc: #e8d5ff">
+        <div class="merch-icon">📓</div>
+        <h4>Papelería</h4>
+        <p>Cuadernos, stickers, washi tapes... Para los amantes del bullet journal</p>
+      </div>
+      <div class="merch-card" style="--mc: #ffd9d9">
+        <div class="merch-icon">👕</div>
+        <h4>Ropa</h4>
+        <p>Colabs con grandes marcas. Supreme x Pochacco fue histórico</p>
+      </div>
+      <div class="merch-card" style="--mc: #fff3cc">
+        <div class="merch-icon">🎮</div>
+        <h4>Accesorios Tech</h4>
+        <p>Fundas de móvil, auriculares, teclados... El setup kawaii definitivo</p>
+      </div>
+      <div class="merch-card" style="--mc: #fce4d6">
+        <div class="merch-icon">☕</div>
+        <h4>Hogar</h4>
+        <p>Tazas, platos, almohadas. Convierte tu casa en un mundo Pochacco</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Galería de colores -->
+  <section class="color-gallery">
+    <h2 class="section-title centered">La Paleta Pochacco 🎨</h2>
+    <div class="color-strip">
+      <div class="color-block" style="background:#87ceeb">
+        <span>#87CEEB</span><small>Sky Blue</small>
+      </div>
+      <div class="color-block" style="background:#ffffff; color: #999">
+        <span>#FFFFFF</span><small>Pure White</small>
+      </div>
+      <div class="color-block" style="background:#4a9e7f">
+        <span>#4A9E7F</span><small>Pochacco Green</small>
+      </div>
+      <div class="color-block" style="background:#b8deff">
+        <span>#B8DEFF</span><small>Soft Cloud</small>
+      </div>
+      <div class="color-block" style="background:#2d7dd2">
+        <span>#2D7DD2</span><small>Deep Blue</small>
+      </div>
+      <div class="color-block" style="background:#f9e4f0">
+        <span>#F9E4F0</span><small>Blush Pink</small>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-paws">🐾🐾🐾</div>
+    <h3>¡Pochacco te quiere! 💙</h3>
+    <p>"La vida es mejor cuando tienes un amigo como Pochacco a tu lado"</p>
+    <div class="footer-nav">
+      <a href="snoopy.html">← Ver Snoopy</a>
+      <a href="kuromi.html">Ver Kuromi →</a>
+    </div>
+  </footer>
+
+  <script>
+    // Generate floating particles
+    const container = document.getElementById('particles');
+    const emojis = ['🐾', '⭐', '💙', '🌸', '⚽', '✨', '🍓'];
+    for (let i = 0; i < 20; i++) {
+      const el = document.createElement('div');
+      el.className = 'particle';
+      el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      el.style.cssText = `
+        left: ${Math.random() * 100}%;
+        animation-delay: ${Math.random() * 8}s;
+        animation-duration: ${6 + Math.random() * 6}s;
+        font-size: ${1 + Math.random() * 1.5}rem;
+        opacity: ${0.3 + Math.random() * 0.4};
+      `;
+      container.appendChild(el);
+    }
+
+    // Intersection observer for animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.p-card, .fact-item, .merch-card, .color-block').forEach(el => observer.observe(el));
+
+    // Animate progress bars
+    const barObserver = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          const bar = e.target.querySelector('.p-bar');
+          if (bar) bar.style.width = bar.style.getPropertyValue('--pct') || bar.style.cssText.match(/--pct:\s*([\d%]+)/)?.[1];
+        }
+      });
+    }, { threshold: 0.5 });
+    document.querySelectorAll('.p-card').forEach(el => barObserver.observe(el));
+  </script>
+</body>
+</html>
