@@ -153,14 +153,23 @@
       aspect-ratio: 1 / 1;
       overflow: hidden;
       position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
+
+    /* fondo propio de cada card para el área de imagen */
+    .card-snoopy   .card-img-wrap { background: #fdf6e3; }
+    .card-pochacco .card-img-wrap { background: #ddf0fb; }
+    .card-kuromi   .card-img-wrap { background: #20003a; }
 
     .card-img-wrap img {
       width: 100%;
       height: 100%;
-      object-fit: cover;
-      object-position: center top;
+      object-fit: contain;       /* imagen completa, sin recorte */
+      object-position: center;
       display: block;
+      padding: 10px;             /* respiro para que no toque el borde */
       transition: transform .4s ease;
     }
     .card:hover .card-img-wrap img {
