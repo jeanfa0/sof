@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Escalas Gráficas y Numéricas — Práctica</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0d1117;
+    --paper: #f5f0e8;
+    --accent: #e8420a;
+    --accent2: #1a56db;
+    --ok: #0f7b3e;
+    --ok-bg: #d1fae5;
+    --fail: #b91c1c;
+    --fail-bg: #fee2e2;
+    --muted: #6b7280;
+    --border: #d6cfc0;
+    --card: #fffdf7;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    font-family: 'Syne', sans-serif;
+    background-color: var(--paper);
+    color: var(--ink);
+    min-height: 100vh;
+    margin: 0;
+  }
+
+  /* Subtle grid texture */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(13,17,23,.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(13,17,23,.03) 1px, transparent 1px);
+    background-size: 32px 32px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .mono { font-family: 'Space Mono', monospace; }
+
+  /* Progress dots */
+  .dot {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    background: transparent;
+    cursor: default;
+    transition: all .25s ease;
+    flex-shrink: 0;
+  }
+  .dot.current  { border-color: var(--accent2); background: var(--accent2); box-shadow: 0 0 0 3px rgba(26,86,219,.2); }
+  .dot.correct  { border-color: var(--ok); background: var(--ok); }
+  .dot.incorrect{ border-color: var(--fail); background: var(--fail); }
+
+  /* Main card */
+  .question-card {
+    background: var(--card);
+    border: 2px solid var(--ink);
+    border-radius: 16px;
+    box-shadow: 6px 6px 0 var(--ink);
+    padding: 2.5rem;
+    position: relative;
+    animation: slideIn .35s cubic-bezier(.22,.68,0,1.2) both;
+  }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(24px) scale(.98); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .question-num {
+    font-size: .7rem;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .question-text {
+    font-size: 1.15rem;
+    font-weight: 600;
+    line-height: 1.65;
+    margin-top: .75rem;
+  }
+
+  /* Input */
+  .answer-input {
+    font-family: 'Space Mono', monospace;
+    font-size: 1.05rem;
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    padding: .7rem 1rem;
+    background: white;
+    outline: none;
+    transition: border-color .2s, box-shadow .2s;
+    width: 100%;
+  }
+  .answer-input:focus {
+    border-color: var(--accent2);
+    box-shadow: 0 0 0 3px rgba(26,86,219,.15);
+  }
+  .answer-input.correct-state {
+    border-color: var(--ok);
+    background: #f0fdf4;
+  }
+  .answer-input.incorrect-state {
+    border-color: var(--fail);
+    background: #fff5f5;
+  }
+
+  /* Verify button */
+  .btn-verify {
+    background: var(--ink);
+    color: white;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: .9rem;
+    letter-spacing: .04em;
+    padding: .72rem 1.5rem;
+    border-radius: 10px;
+    border: 2px solid var(--ink);
+    cursor: pointer;
+    transition: all .18s ease;
+    white-space: nowrap;
+  }
+  .btn-verify:hover:not(:disabled) {
+    background: var(--accent);
+    border-color: var(--accent);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(232,66,10,.25);
+  }
+  .btn-verify:disabled {
+    opacity: .45;
+    cursor: not-allowed;
+  }
+
+  /* Feedback */
+  .feedback-box {
+    border-radius: 10px;
+    padding: 1rem 1.2rem;
+    font-size: .92rem;
+    line-height: 1.55;
+    display: flex;
+    gap: .75rem;
+    align-items: flex-start;
+    animation: fadeUp .25s ease both;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .feedback-box.correct  { background: var(--ok-bg);   border: 1.5px solid #6ee7b7; color: #065f46; }
+  .feedback-box.incorrect{ background: var(--fail-bg); border: 1.5px solid #fca5a5; color: #7f1d1d; }
+
+  .feedback-icon { font-size: 1.25rem; margin-top: .05rem; flex-shrink: 0; }
+
+  /* Nav buttons */
+  .btn-nav {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: .88rem;
+    padding: .6rem 1.3rem;
+    border-radius: 10px;
+    border: 2px solid var(--ink);
+    background: transparent;
+    cursor: pointer;
+    transition: all .18s ease;
+    display: flex; align-items: center; gap: .4rem;
+  }
+  .btn-nav:hover:not(:disabled) {
+    background: var(--ink);
+    color: white;
+  }
+  .btn-nav:disabled { opacity: .3; cursor: not-allowed; }
+
+  /* Header stripe */
+  .header-stripe {
+    background: var(--ink);
+    color: white;
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Score summary */
+  .score-pill {
+    background: rgba(255,255,255,.1);
+    border: 1px solid rgba(255,255,255,.2);
+    border-radius: 100px;
+    padding: .3rem .9rem;
+    font-size: .8rem;
+    font-weight: 700;
+    letter-spacing: .04em;
+    font-family: 'Space Mono', monospace;
+  }
+
+  /* Results screen */
+  .results-card {
+    background: var(--card);
+    border: 2px solid var(--ink);
+    border-radius: 16px;
+    box-shadow: 8px 8px 0 var(--ink);
+    padding: 3rem;
+    text-align: center;
+    animation: slideIn .4s cubic-bezier(.22,.68,0,1.2) both;
+  }
+
+  .big-score {
+    font-size: 5rem;
+    font-weight: 800;
+    line-height: 1;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .btn-restart {
+    background: var(--accent);
+    color: white;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    padding: .85rem 2.5rem;
+    border-radius: 12px;
+    border: 2px solid var(--ink);
+    cursor: pointer;
+    box-shadow: 4px 4px 0 var(--ink);
+    transition: all .18s ease;
+    letter-spacing: .03em;
+  }
+  .btn-restart:hover {
+    transform: translate(-2px,-2px);
+    box-shadow: 6px 6px 0 var(--ink);
+  }
+
+  /* Tooltip for dots */
+  .dot-wrap { position: relative; }
+  .dot-wrap:hover .dot-tip {
+    opacity: 1; pointer-events: auto; transform: translateY(-4px);
+  }
+  .dot-tip {
+    position: absolute;
+    bottom: 130%; left: 50%; transform: translateX(-50%) translateY(0);
+    background: var(--ink); color: white;
+    font-family: 'Space Mono', monospace;
+    font-size: .65rem;
+    padding: .25rem .5rem;
+    border-radius: 6px;
+    white-space: nowrap;
+    opacity: 0; pointer-events: none;
+    transition: all .2s ease;
+    z-index: 10;
+  }
+
+  /* Decorative accent bar on card */
+  .question-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 2rem; right: 2rem;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    border-radius: 0 0 4px 4px;
+  }
+
+  @media (max-width: 640px) {
+    .question-card { padding: 1.75rem 1.25rem; }
+    .question-text { font-size: 1rem; }
+    .big-score { font-size: 3.5rem; }
+    .results-card { padding: 2rem 1.25rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header-stripe">
+  <div>
+    <div style="font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;opacity:.6;margin-bottom:.15rem;">2° Año de Secundaria</div>
+    <div style="font-size:1.1rem;font-weight:800;letter-spacing:.01em;">Escalas Gráficas y Numéricas</div>
+  </div>
+  <div id="headerScore" class="score-pill mono">0 / 20</div>
+</div>
+
+<!-- Main layout -->
+<div class="relative z-10 max-w-3xl mx-auto px-4 py-8" id="appContainer">
+
+  <!-- Progress dots -->
+  <div class="mb-6">
+    <div class="flex items-center justify-between mb-2">
+      <span style="font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);">Progreso</span>
+      <span id="progressLabel" class="mono" style="font-size:.75rem;font-weight:700;">Pregunta 1 de 20</span>
+    </div>
+    <!-- Progress bar -->
+    <div style="height:4px;background:var(--border);border-radius:2px;margin-bottom:1rem;">
+      <div id="progressBar" style="height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:2px;width:5%;transition:width .4s ease;"></div>
+    </div>
+    <!-- Dots -->
+    <div id="dotsContainer" class="flex flex-wrap gap-2"></div>
+  </div>
+
+  <!-- Question Card -->
+  <div id="questionSection">
+    <div class="question-card" id="questionCard">
+      <div class="question-num" id="questionNum">Pregunta 01</div>
+      <p class="question-text" id="questionText"></p>
+
+      <!-- Input row -->
+      <div class="flex gap-3 mt-6 items-stretch">
+        <input
+          type="text"
+          id="answerInput"
+          class="answer-input"
+          placeholder="Escribe tu respuesta aquí..."
+          autocomplete="off"
+          autocorrect="off"
+          spellcheck="false"
+        />
+        <button id="verifyBtn" class="btn-verify">Verificar</button>
+      </div>
+
+      <!-- Feedback -->
+      <div id="feedbackArea" class="mt-4 hidden"></div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="flex justify-between mt-5">
+      <button id="prevBtn" class="btn-nav">
+        <span>←</span> Anterior
+      </button>
+      <button id="nextBtn" class="btn-nav">
+        Siguiente <span>→</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Results Screen (hidden initially) -->
+  <div id="resultsSection" class="hidden">
+    <div class="results-card">
+      <div style="font-size:.75rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem;">Práctica Completada</div>
+      <div class="big-score" id="finalScore">0/20</div>
+      <div style="font-size:1.05rem;font-weight:600;margin-top:.75rem;" id="finalMsg"></div>
+      <div style="font-size:.9rem;color:var(--muted);margin-top:.5rem;" id="finalSub"></div>
+
+      <!-- Mini results grid -->
+      <div id="resultGrid" class="flex flex-wrap gap-2 justify-center mt-8 mb-8"></div>
+
+      <button class="btn-restart" id="restartBtn">↺ Volver a Intentar</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const questions = [
+  {id:1,question:"Si en un mapa del distrito de Comas la escala es 1 : 25,000 y la distancia en el papel entre dos avenidas es de 12 cm, ¿cuántos kilómetros reales las separan?",acceptedAnswers:["3","3 km","3km","3 kilómetros"],rationale:"Al multiplicar 12 cm × 25,000 obtenemos 300,000 cm. Al retirar 5 ceros para cambiar la unidad a kilómetros, nos quedan exactamente 3 km."},
+  {id:2,question:"Un segmento de 4 cm en un mapa representa una distancia real de 20 km. ¿Cuál es su escala numérica equivalente? (Formato de ejemplo: 1:100000)",acceptedAnswers:["1:500000","1:500.000","1:500 000"],rationale:"Si 4 cm equivale a 20 km, dividimos entre 4 para saber que 1 cm son 5 km. Al transformar 5 km a centímetros agregando 5 ceros, obtenemos la escala 1:500000."},
+  {id:3,question:"Un terreno rectangular mide 8 cm de largo y 5 cm de ancho en un plano a escala 1 : 200. ¿Cuál es el largo real del terreno en metros?",acceptedAnswers:["16","16 m","16m","16 metros"],rationale:"Multiplicando 8 cm × 200 de la escala se obtienen 1600 cm reales. Al dividir entre 100 para pasarlo a metros, nos da 16 metros."},
+  {id:4,question:"Tomando los datos del ejercicio anterior (terreno en plano a escala 1 : 200), ¿cuál es el ancho real del terreno en metros?",acceptedAnswers:["10","10 m","10m","10 metros"],rationale:"Multiplicando 5 cm × 200 de la escala se obtienen 1000 cm reales. Al dividir entre 100 para pasarlo a metros, nos da 10 metros."},
+  {id:5,question:"La distancia real entre Lima y una ciudad vecina es de 180 km. ¿Cuántos centímetros medirá la línea que las une en un mapa a escala 1 : 600,000?",acceptedAnswers:["30","30 cm","30cm","30 centímetros"],rationale:"Convertimos los 180 km a centímetros agregando 5 ceros (18,000,000 cm). Al dividir este valor entre el denominador 600,000 nos da exactamente 30 cm."},
+  {id:6,question:"¿A cuántos kilómetros reales equivale cada centímetro medido en un mapa que posee una escala de 1 : 2,500,000?",acceptedAnswers:["25","25 km","25km","25 kilómetros"],rationale:"Aplicando la regla práctica de quitar 5 ceros a los 2,500,000 cm de la escala, obtenemos directamente su valor correspondiente en kilómetros, que es 25."},
+  {id:7,question:"Si una avenida real de 5 km está representada por un segmento de 10 cm en un plano, ¿cuál es la escala numérica de ese plano? (Formato de ejemplo: 1:50000)",acceptedAnswers:["1:50000","1:50.000","1:50 000"],rationale:"Si 10 cm = 5 km, entonces 1 cm = 0.5 km (lo que equivale a 500 metros). Al transformar 500 metros a centímetros multiplicando por 100, la escala resultante es 1:50000."},
+  {id:8,question:"Un cuarto de estudio cuadrado mide 3 cm de lado en un plano a escala 1 : 100. ¿Cuál es el área real de ese cuarto en metros cuadrados?",acceptedAnswers:["9","9 m2","9m2","9 metros cuadrados"],rationale:"El lado mide 3 cm × 100 = 300 cm reales, que equivalen a 3 metros. El área de la superficie real de la habitación cuadrada es de 3 m × 3 m = 9 metros cuadrados."},
+  {id:9,question:"Un mapa turístico tiene una escala de 1 : 80,000. Si la distancia entre dos complejos deportivos es de 4.5 cm en el papel, ¿cuál es la distancia real en metros?",acceptedAnswers:["3600","3600 m","3600m","3600 metros"],rationale:"Multiplicamos 4.5 cm × 80,000 de la escala y nos da 360,000 cm. Al dividir entre 100 para transformar los centímetros lineales a metros, obtenemos exactamente 3600 m."},
+  {id:10,question:"Se lee en la leyenda de un mapa: 'Escala de Ampliación 5 : 1'. Si en el dibujo una pieza de un microchip mide 15 mm, ¿cuánto mide la pieza real en milímetros?",acceptedAnswers:["3","3 mm","3mm","3 milímetros"],rationale:"Al ser una escala de ampliación, el dibujo es más grande que la realidad. Dividimos la medida del papel entre el factor de ampliación: 15 mm / 5 = 3 mm reales."},
+  {id:11,question:"La distancia entre la posta médica y el colegio PIN es de 16 cm en un plano a escala 1 : 5,000. ¿Cuánto medirá esa misma distancia en centímetros en otro plano cuya escala es 1 : 20,000?",acceptedAnswers:["4","4 cm","4cm","4 centímetros"],rationale:"La distancia real en el terreno es 16 cm × 5,000 = 80,000 cm. En el nuevo mapa con menor nivel de detalle, dividimos esos 80,000 cm entre su escala de 20,000, dando 4 cm."},
+  {id:12,question:"Un mapa geográfico usa una escala de 1 : 150,000. Si la distancia real entre dos valles es de 45 km, ¿con cuántos centímetros quedará plasmada en el plano?",acceptedAnswers:["30","30 cm","30cm","30 centímetros"],rationale:"Convertimos los 45 km reales a centímetros añadiendo 5 ceros (4,500,000 cm) y dividimos este resultado entre el factor del plano que es 150,000, obteniendo 30 cm."},
+  {id:13,question:"Si una barra de escala gráfica de 3 cm de longitud representa una distancia de 150 metros reales, ¿cuál es el valor de su escala numérica? (Formato de ejemplo: 1:5000)",acceptedAnswers:["1:5000","1:5.000","1:5 000"],rationale:"Si 3 cm equivalen a 150 m, dividimos para saber que 1 cm es igual a 50 metros reales. Al convertir 50 metros a centímetros multiplicando por 100, la escala numérica es 1:5000."},
+  {id:14,question:"Un estudiante nota que en un plano a escala 1 : 250, la altura de un edificio es de 8 cm. ¿Cuál es la altura real del edificio en metros?",acceptedAnswers:["20","20 m","20m","20 metros"],rationale:"Multiplicamos la medida del plano por su escala: 8 cm × 250 = 2000 cm reales. Al pasar de centímetros a metros dividiendo entre 100, obtenemos un total de 20 metros."},
+  {id:15,question:"Medimos con un hilo un camino curvo en un mapa de escala 1 : 120,000 y marca 15 cm en el papel. ¿Cuántos kilómetros reales tiene el camino?",acceptedAnswers:["18","18 km","18km","18 kilómetros"],rationale:"Multiplicamos los 15 cm medidos por el factor del mapa: 15 × 120,000 = 1,800,000 cm reales. Al quitar los 5 ceros de regla para pasarlo a kilómetros, nos quedan exactamente 18 km."},
+  {id:16,question:"Si una cancha de fútbol mide 100 metros de largo en la realidad, ¿cuántos centímetros medirá en un plano que tiene una escala de 1 : 500?",acceptedAnswers:["20","20 cm","20cm","20 centímetros"],rationale:"Primero pasamos los 100 metros reales a centímetros agregando dos ceros (10,000 cm). Luego, dividimos esa cantidad entre el factor de la escala: 10,000 / 500 = 20 cm."},
+  {id:17,question:"Un mapa tiene una escala numérica de 1 : 400,000. Si duplicamos el tamaño del mapa en una fotocopiadora, ¿cuál será el denominador de la nueva escala del mapa ampliado? (Escribe solo el número neto)",acceptedAnswers:["200000","200.000","200 000"],rationale:"Al duplicar físicamente el tamaño del papel, las representaciones se magnifican al doble, por lo que el denominador de la escala se reduce exactamente a la mitad: 400,000 / 2 = 200,000."},
+  {id:18,question:"En un plano de escala 1 : 20, el ancho de una ventana mide 6 cm. Si se cambia por una ventana que mide el doble en la realidad, ¿cuántos centímetros medirá en el plano manteniendo la misma escala?",acceptedAnswers:["12","12 cm","12cm","12 centímetros"],rationale:"Como la escala del plano se mantiene inalterada, si las dimensiones físicas del objeto real aumentan al doble, su representación proporcional sobre el papel también se duplicará directamente (6 cm × 2 = 12 cm)."},
+  {id:19,question:"Si la distancia real entre dos puntos en línea recta es de 35 km y en el mapa está representada por un segmento de 7 cm, ¿cuántos kilómetros reales representará una línea de 10 cm en ese mismo mapa?",acceptedAnswers:["50","50 km","50km","50 kilómetros"],rationale:"Establecemos el valor unitario: 35 km / 7 cm = 5 km reales por cada centímetro en el papel. Multiplicando esa constante por la nueva longitud del segmento, obtenemos 10 × 5 = 50 km."},
+  {id:20,question:"En un mapa de escala 1 : 50,000, la distancia entre dos cerros mide 8 cm. Si pasamos esa misma distancia real a un mapa de escala 1 : 100,000, ¿cuántos centímetros medirá en este segundo mapa?",acceptedAnswers:["4","4 cm","4cm","4 centímetros"],rationale:"Calculamos la distancia real: 8 cm × 50,000 = 400,000 cm. En el nuevo mapa, que reduce la escala a la mitad de detalle, dividimos la distancia real entre su denominador: 400,000 / 100,000 = 4 cm."}
+];
+
+// State
+const state = {
+  current: 0,
+  answers: Array(questions.length).fill(null), // null | 'correct' | 'incorrect'
+  userInputs: Array(questions.length).fill(''),
+  verified: Array(questions.length).fill(false),
+};
+
+// DOM refs
+const dotsContainer   = document.getElementById('dotsContainer');
+const progressLabel   = document.getElementById('progressLabel');
+const progressBar     = document.getElementById('progressBar');
+const questionNum     = document.getElementById('questionNum');
+const questionText    = document.getElementById('questionText');
+const answerInput     = document.getElementById('answerInput');
+const verifyBtn       = document.getElementById('verifyBtn');
+const feedbackArea    = document.getElementById('feedbackArea');
+const prevBtn         = document.getElementById('prevBtn');
+const nextBtn         = document.getElementById('nextBtn');
+const questionSection = document.getElementById('questionSection');
+const resultsSection  = document.getElementById('resultsSection');
+const questionCard    = document.getElementById('questionCard');
+const headerScore     = document.getElementById('headerScore');
+
+// Normalize answer for comparison
+function normalize(str) {
+  return str
+    .toLowerCase()
+    .replace(/\s+/g, '')          // remove all spaces
+    .replace(/\./g, '')           // remove dots (1.500.000 → 1500000)
+    .replace(/,/g, '')            // remove commas
+    .replace(/kilómetros?/g, 'km')
+    .replace(/metros?cuadrados?/g, 'm2')
+    .replace(/metros?/g, 'm')
+    .replace(/centímetros?/g, 'cm')
+    .replace(/milímetros?/g, 'mm')
+    .trim();
+}
+
+function checkAnswer(userRaw, accepted) {
+  const userN = normalize(userRaw);
+  return accepted.some(a => normalize(a) === userN);
+}
+
+// Build dots
+function buildDots() {
+  dotsContainer.innerHTML = '';
+  questions.forEach((_, i) => {
+    const wrap = document.createElement('div');
+    wrap.className = 'dot-wrap';
+    const d = document.createElement('div');
+    d.className = 'dot';
+    d.id = `dot-${i}`;
+    const tip = document.createElement('div');
+    tip.className = 'dot-tip';
+    tip.textContent = `P${i + 1}`;
+    wrap.appendChild(d);
+    wrap.appendChild(tip);
+    dotsContainer.appendChild(wrap);
+  });
+}
+
+function updateDots() {
+  questions.forEach((_, i) => {
+    const d = document.getElementById(`dot-${i}`);
+    d.className = 'dot';
+    if (i === state.current) d.classList.add('current');
+    else if (state.answers[i] === 'correct') d.classList.add('correct');
+    else if (state.answers[i] === 'incorrect') d.classList.add('incorrect');
+  });
+}
+
+function updateProgress() {
+  const n = state.current + 1;
+  progressLabel.textContent = `Pregunta ${n} de ${questions.length}`;
+  progressBar.style.width = `${(n / questions.length) * 100}%`;
+
+  const correct = state.answers.filter(a => a === 'correct').length;
+  const answered = state.answers.filter(a => a !== null).length;
+  headerScore.textContent = `${correct} / ${questions.length}`;
+}
+
+function renderQuestion(animate = true) {
+  const q = questions[state.current];
+
+  if (animate) {
+    questionCard.style.animation = 'none';
+    requestAnimationFrame(() => {
+      questionCard.style.animation = '';
+    });
+  }
+
+  questionNum.textContent = `Pregunta ${String(state.current + 1).padStart(2, '0')}`;
+  questionText.textContent = q.question;
+
+  // Restore input state
+  answerInput.value = state.userInputs[state.current] || '';
+  answerInput.className = 'answer-input';
+  feedbackArea.innerHTML = '';
+  feedbackArea.classList.add('hidden');
+
+  const isVerified = state.verified[state.current];
+
+  if (isVerified) {
+    const result = state.answers[state.current];
+    answerInput.disabled = true;
+    verifyBtn.disabled = true;
+    if (result === 'correct') {
+      answerInput.classList.add('correct-state');
+      showFeedback(true, q);
+    } else {
+      answerInput.classList.add('incorrect-state');
+      showFeedback(false, q);
+    }
+  } else {
+    answerInput.disabled = false;
+    verifyBtn.disabled = false;
+    answerInput.focus();
+  }
+
+  prevBtn.disabled = state.current === 0;
+  nextBtn.disabled = state.current === questions.length - 1;
+
+  updateDots();
+  updateProgress();
+}
+
+function showFeedback(isCorrect, q) {
+  feedbackArea.classList.remove('hidden');
+  feedbackArea.innerHTML = `
+    <div class="feedback-box ${isCorrect ? 'correct' : 'incorrect'}">
+      <span class="feedback-icon">${isCorrect ? '✅' : '❌'}</span>
+      <div>
+        <strong>${isCorrect ? '¡Correcto!' : 'No es correcto.'}</strong>
+        <div style="margin-top:.3rem;">${q.rationale}</div>
+      </div>
+    </div>
+  `;
+}
+
+// Verify logic
+function handleVerify() {
+  const q = questions[state.current];
+  const raw = answerInput.value.trim();
+  if (!raw) {
+    answerInput.focus();
+    answerInput.style.borderColor = 'var(--accent)';
+    setTimeout(() => answerInput.style.borderColor = '', 600);
+    return;
+  }
+
+  const correct = checkAnswer(raw, q.acceptedAnswers);
+  state.answers[state.current] = correct ? 'correct' : 'incorrect';
+  state.userInputs[state.current] = raw;
+  state.verified[state.current] = true;
+
+  answerInput.disabled = true;
+  verifyBtn.disabled = true;
+  answerInput.className = 'answer-input ' + (correct ? 'correct-state' : 'incorrect-state');
+  showFeedback(correct, q);
+  updateDots();
+  updateProgress();
+
+  // Auto-advance after correct
+  if (correct && state.current < questions.length - 1) {
+    setTimeout(() => navigate(1), 1400);
+  }
+
+  // Check if all done
+  const allAnswered = state.verified.every(v => v);
+  if (allAnswered) {
+    setTimeout(() => showResults(), correct ? 2000 : 0);
+  }
+}
+
+function navigate(dir) {
+  const next = state.current + dir;
+  if (next < 0 || next >= questions.length) return;
+  state.current = next;
+  renderQuestion();
+}
+
+function showResults() {
+  questionSection.classList.add('hidden');
+  resultsSection.classList.remove('hidden');
+
+  const correct = state.answers.filter(a => a === 'correct').length;
+  document.getElementById('finalScore').textContent = `${correct}/${questions.length}`;
+
+  let msg, sub;
+  const pct = (correct / questions.length) * 100;
+  if (pct === 100) { msg = '¡Perfecto! Dominas las escalas.'; sub = 'Excelente desempeño, sin ningún error.'; }
+  else if (pct >= 80) { msg = '¡Muy bien! Casi perfecto.'; sub = 'Revisa las preguntas en rojo para reforzar.'; }
+  else if (pct >= 60) { msg = 'Buen intento. Sigue practicando.'; sub = 'Repasa los procedimientos de conversión de unidades.'; }
+  else { msg = 'Necesitas más práctica.'; sub = 'Vuelve a repasar la teoría de escalas y vuelve a intentarlo.'; }
+
+  document.getElementById('finalMsg').textContent = msg;
+  document.getElementById('finalSub').textContent = sub;
+
+  // Result grid
+  const grid = document.getElementById('resultGrid');
+  grid.innerHTML = '';
+  questions.forEach((q, i) => {
+    const r = state.answers[i];
+    const chip = document.createElement('div');
+    chip.style.cssText = `
+      width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+      font-family:'Space Mono',monospace;font-size:.7rem;font-weight:700;
+      background:${r==='correct'?'var(--ok-bg)':r==='incorrect'?'var(--fail-bg)':'#f3f4f6'};
+      color:${r==='correct'?'var(--ok)':r==='incorrect'?'var(--fail)':'var(--muted)'};
+      border:2px solid ${r==='correct'?'#6ee7b7':r==='incorrect'?'#fca5a5':'var(--border)'};
+    `;
+    chip.textContent = i + 1;
+    chip.title = `Pregunta ${i+1}: ${r||'sin responder'}`;
+    grid.appendChild(chip);
+  });
+}
+
+function restart() {
+  state.current = 0;
+  state.answers.fill(null);
+  state.userInputs.fill('');
+  state.verified.fill(false);
+
+  resultsSection.classList.add('hidden');
+  questionSection.classList.remove('hidden');
+  renderQuestion();
+}
+
+// Event listeners
+verifyBtn.addEventListener('click', handleVerify);
+prevBtn.addEventListener('click', () => navigate(-1));
+nextBtn.addEventListener('click', () => navigate(1));
+document.getElementById('restartBtn').addEventListener('click', restart);
+
+answerInput.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !verifyBtn.disabled) handleVerify();
+});
+
+// Init
+buildDots();
+renderQuestion(false);
+</script>
+</body>
+</html>
